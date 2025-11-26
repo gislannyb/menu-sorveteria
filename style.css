@@ -1917,3 +1917,40 @@ body {
     display: block;
     margin: 10px 0;
 }
+
+/* Ajustes para telas maiores (desktop): aumenta tipografia, espaçamento e tamanho dos cards */
+@media (min-width: 1024px) {
+    html { font-size: 18px; }
+    body { font-size: 1rem; }
+
+    .container {
+        padding: 40px 32px;
+        gap: 36px;
+        max-width: 1400px;
+    }
+
+    .header-text h1 { font-size: 40px; }
+    .header-description { font-size: 16px; }
+
+    /* Items maiores em desktop: 4 colunas quando couber */
+    .cardapio {
+        justify-content: flex-start;
+        gap: 20px;
+    }
+
+    .item {
+        flex: 0 1 calc(25% - 18px);
+        min-width: 220px;
+        max-width: 280px;
+        padding: 18px;
+        border-radius: 14px;
+    }
+
+    .item img { height: 160px; }
+
+    /* Aumenta legibilidade do carrinho e botões */
+    .carrinho { width: 360px; }
+    .cart-line .name { font-size: 16px; }
+    .cart-line .price { font-size: 14px; }
+    .qty-btn { padding: 6px 10px; }
+}

@@ -281,15 +281,48 @@ function enviarParaWhatsApp() {
     mensagem += `📅 Data/Hora: ${dataHora}\n`;
     mensagem += '\n✅ Obrigado por escolher BomSabor!';
 
-    // Copia mensagem para área de transferência
-    navigator.clipboard.writeText(mensagem).then(() => {
-        showToast('✅ Mensagem copiada com sucesso!', 3000);
-        alert('✅ Mensagem pronta!\n\n📋 A mensagem foi copiada para sua área de transferência.\n\n📱 Abra o WhatsApp, escolha um contato e COLE a mensagem (Ctrl+V).\n\nSeu pedido:\n' + mensagem);
-        
-    }).catch(() => {
-        // Se falhar a cópia, mostra a mensagem em um alert
-        alert('Mensagem do seu pedido:\n\n' + mensagem + '\n\n📋 Copie a mensagem acima e envie pelo WhatsApp!');
-    });
+    // Prepara URL para abrir com a mensagem pré-preenchida
+    const encoded = encodeURIComponent(mensagem);
+
+    let url = '';
+    // Se houver número configurado, direciona para conversa específica
+    if (WHATSAPP_PHONE && WHATSAPP_PHONE.trim() !== '') {
+        url = `https://web.whatsapp.com/send?phone=${WHATSAPP_PHONE}&text=${encoded}`;
+    } else {
+        // Detecta mobile simples pelo userAgent
+        const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+        if (isMobile) {
+            // wa.me funciona bem em dispositivos móveis
+            url = `https://wa.me/?text=${encoded}`;
+        } else {
+            // Desktop: abrir WhatsApp Web com texto pré-preenchido
+            url = `https://web.whatsapp.com/send?text=${encoded}`;
+        }
+    }
+
+    // Tenta abrir o WhatsApp em nova aba/janela
+    try {
+        const opened = window.open(url, '_blank');
+        if (opened) {
+            showToast('✅ Abrindo WhatsApp...', 2000);
+            // Também tenta copiar a mensagem para facilitar caso o usuário queira colar
+            navigator.clipboard.writeText(mensagem).catch(() => {});
+        } else {
+            // Popup bloqueado: copia mensagem e avisa o usuário
+            navigator.clipboard.writeText(mensagem).then(() => {
+                alert('✅ Popup bloqueado. A mensagem foi copiada para a área de transferência.\n\nAbra o WhatsApp e cole (Ctrl+V) para enviar.');
+            }).catch(() => {
+                alert('Não foi possível abrir o WhatsApp automaticamente.\n\nPor favor, copie manualmente a mensagem abaixo e cole no WhatsApp:\n\n' + mensagem);
+            });
+        }
+    } catch (e) {
+        // Erro genérico: copia a mensagem e mostra instrução
+        navigator.clipboard.writeText(mensagem).then(() => {
+            alert('Ocorreu um erro ao abrir o WhatsApp. A mensagem foi copiada para a área de transferência.\n\nAbra o WhatsApp e cole (Ctrl+V).');
+        }).catch(() => {
+            alert('Ocorreu um erro e não foi possível copiar automaticamente.\n\nCopie a mensagem abaixo e cole no WhatsApp:\n\n' + mensagem);
+        });
+    }
 }
 
 function updateCartCount() {
