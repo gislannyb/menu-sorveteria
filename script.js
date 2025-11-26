@@ -248,30 +248,53 @@ function enviarParaWhatsApp() {
         return;
     }
 
-    let linhas = [];
+    // Construir mensagem formatada e profissional
+    let mensagem = '🍦 *PEDIDO BOMSABOR* 🍦\n';
+    mensagem += '════════════════════════════════\n\n';
+    
+    // Dados do cliente
+    mensagem += '👤 *CLIENTE*\n';
+    mensagem += `Nome: ${nome}\n`;
+    if (telefone) mensagem += `Telefone: ${telefone}\n`;
+    mensagem += `Endereço: ${endereco}\n\n`;
+    
+    // Itens do pedido
+    mensagem += '🍨 *PEDIDO*\n';
+    mensagem += '────────────────────────────────\n';
+    
     let total = 0;
-    carrinho.forEach(i => {
-        const subtotal = i.qtd * i.preco;
+    carrinho.forEach((item, index) => {
+        const subtotal = item.qtd * item.preco;
         total += subtotal;
-        linhas.push(`${i.qtd}x ${i.sabor} (${i.tamanho}) — R$ ${subtotal.toFixed(2).replace('.', ',')}`);
+        mensagem += `${index + 1}. ${item.sabor} (${item.tamanho})\n`;
+        mensagem += `   Quantidade: ${item.qtd}x\n`;
+        mensagem += `   Subtotal: R$ ${subtotal.toFixed(2).replace('.', ',')}\n\n`;
     });
+    
+    // Separador e total
+    mensagem += '════════════════════════════════\n';
+    mensagem += `💰 *TOTAL: R$ ${total.toFixed(2).replace('.', ',')}*\n`;
+    mensagem += '════════════════════════════════\n\n';
+    
+    // Rodapé com data/hora
+    const agora = new Date();
+    const dataHora = agora.toLocaleString('pt-BR');
+    mensagem += `📅 Pedido enviado em: ${dataHora}\n`;
+    mensagem += '\n✅ Obrigado por escolher BomSabor!';
 
-    let mensagem = '';
-    if (nome) mensagem += `*Nome:* ${nome}\n`;
-    if (telefone) mensagem += `*Telefone:* ${telefone}\n`;
-    if (endereco) mensagem += `*Endereço:* ${endereco}\n`;
-    mensagem += `*Pedido:*\n` + linhas.join('\n') + `\n*Total:* R$ ${total.toFixed(2).replace('.', ',')}`;
-
-    const encoded = encodeURIComponent(mensagem);
-    if (WHATSAPP_PHONE && WHATSAPP_PHONE.trim() !== '') {
-        const url = `https://api.whatsapp.com/send?phone=${WHATSAPP_PHONE}&text=${encoded}`;
-        window.open(url, '_blank');
-        return;
-    }
-
-    const whatsappQR = 'https://wa.me/qr/2F2ORF5CAI3SB1';
-    const url = `${whatsappQR}?text=${encoded}`;
-    window.open(url, '_blank');
+    // Copia mensagem para área de transferência
+    navigator.clipboard.writeText(mensagem).then(() => {
+        showToast('✅ Mensagem copiada! Abrindo WhatsApp Web...', 2000);
+        
+        // Abre WhatsApp Web em nova aba
+        setTimeout(() => {
+            window.open('https://web.whatsapp.com', '_blank');
+        }, 500);
+        
+    }).catch(() => {
+        // Se falhar a cópia, mostra alternativa
+        alert('Erro ao copiar mensagem.\n\nAbra https://web.whatsapp.com e copie manualmente a mensagem abaixo:\n\n' + mensagem);
+    });
 }
 
 function updateCartCount() {

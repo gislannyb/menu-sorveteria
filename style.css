@@ -1102,41 +1102,231 @@ body {
     }
 }
 
-/* Preservar aparência Desktop em Mobile via scroll horizontal compacto */
-@media (max-width: 480px) {
-    /* container deixa de empilhar e passa a rolar horizontalmente mantendo colunas */
+/* Layout Vertical Mobile - Sem Scroll Horizontal */
+@media (max-width: 768px) {
     .container {
-        flex-direction: row;
-        flex-wrap: nowrap;
-        overflow-x: auto;
-        -webkit-overflow-scrolling: touch;
+        flex-direction: column;
+        align-items: stretch;
+        gap: 20px;
+        padding: 20px 16px;
+        overflow-x: hidden;
+    }
+
+    /* Cardápio com carrossel horizontal interno */
+    .cardapio {
+        display: flex;
+        flex-wrap: wrap;
         gap: 12px;
+        width: 100%;
+        max-width: 100%;
+        justify-content: center;
+    }
+
+    /* Cada card de sorvete com tamanho responsivo */
+    .item {
+        flex: 0 1 calc(50% - 6px);
+        min-width: 140px;
+        max-width: 160px;
         padding: 12px;
-        scroll-snap-type: x mandatory;
+        border-radius: 12px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
     }
 
-    /* Cada bloco se mantém com largura mínima aproximando o desktop */
-    .cardapio, .sidebar, .carrinho {
-        flex: 0 0 auto;
-        scroll-snap-align: start;
-        background-clip: padding-box;
+    .item img {
+        height: 120px;
+        width: 100%;
+        object-fit: cover;
+        margin-bottom: 8px;
     }
 
-    /* Larguras pensadas para manter similaridade com desktop (ajuste conforme necessário) */
-    .cardapio { min-width: 520px; max-width: 520px; }
-    .sidebar { min-width: 280px; max-width: 280px; }
-    .carrinho { min-width: 340px; max-width: 340px; }
+    .item h3 {
+        font-size: 14px;
+        margin: 6px 0;
+    }
 
-    /* Header sticky para permanecer visível enquanto rola horizontalmente */
-    .top-header { position: sticky; top: 0; z-index: 1100; }
+    .item .desc {
+        font-size: 11px;
+        margin: 4px 0;
+    }
 
-    /* Tornar imagens e cards mais compactos para caber melhor */
-    .item img { height: 120px; }
-    .item { padding: 10px; border-radius: 10px; }
+    .item .preco {
+        font-size: 13px;
+        margin: 6px 0;
+    }
 
-    /* Forçar botões flutuantes a não aparecerem sobre o conteúdo durante o scroll horizontal
-       (apenas segurança; já há a classe floating-hidden que chamamos ao rolar) */
-    .cart-btn-header, .help-btn-header { z-index: 1200; }
+    .size-row {
+        flex-direction: column;
+        gap: 6px;
+        margin-top: 8px;
+    }
+
+    .size-select {
+        width: 100%;
+        font-size: 12px;
+        padding: 8px;
+    }
+
+    .item button {
+        width: 100%;
+        padding: 10px;
+        font-size: 12px;
+    }
+
+    /* Sidebar fica abaixo em tela mobile */
+    .sidebar {
+        width: 100%;
+        padding: 16px;
+        background: white;
+        border-radius: 12px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+        order: 2;
+    }
+
+    .sidebar h3 {
+        font-size: 16px;
+        margin-bottom: 12px;
+    }
+
+    .sidebar .side-block {
+        margin-bottom: 12px;
+        padding-bottom: 12px;
+        border-bottom: 1px solid #ecf0f1;
+        font-size: 13px;
+    }
+
+    .sidebar .side-block:last-child {
+        border-bottom: none;
+    }
+
+    /* Carrinho fica por último em tela mobile */
+    .carrinho {
+        width: 100%;
+        padding: 16px;
+        background: white;
+        border-radius: 12px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+        order: 3;
+    }
+
+    .carrinho h2 {
+        font-size: 18px;
+        margin-bottom: 12px;
+    }
+
+    #cart-items {
+        max-height: 250px;
+        overflow-y: auto;
+        margin-bottom: 12px;
+    }
+
+    #total {
+        font-size: 16px;
+        margin: 12px 0;
+        padding: 10px;
+        background: #f0f3ff;
+        border-radius: 8px;
+    }
+
+    .cart-line {
+        padding: 10px 0;
+        border-bottom: 1px solid #ecf0f1;
+        gap: 10px;
+    }
+
+    .cart-line .info .name {
+        font-size: 13px;
+    }
+
+    .cart-line .price {
+        font-size: 12px;
+    }
+
+    .controls {
+        gap: 6px;
+        flex-wrap: wrap;
+    }
+
+    .qty-controls {
+        gap: 4px;
+        padding: 3px;
+    }
+
+    .qty-btn {
+        width: 28px;
+        height: 28px;
+        font-size: 12px;
+    }
+
+    .qty {
+        min-width: 18px;
+        font-size: 12px;
+    }
+
+    .remove-btn {
+        font-size: 11px;
+        padding: 4px 8px;
+    }
+
+    .form-section {
+        padding: 12px;
+        margin-bottom: 10px;
+        border-radius: 10px;
+    }
+
+    .form-section h4 {
+        font-size: 14px;
+        margin-bottom: 10px;
+    }
+
+    .form-group {
+        margin-bottom: 10px;
+    }
+
+    .form-group label {
+        font-size: 12px;
+        margin-bottom: 4px;
+    }
+
+    .form-group input {
+        padding: 10px;
+        font-size: 14px;
+        border-radius: 6px;
+        width: 100%;
+    }
+
+    #btn-whatsapp {
+        padding: 12px;
+        font-size: 14px;
+        margin-bottom: 8px;
+        width: 100%;
+    }
+
+    #btn-limpar {
+        padding: 10px;
+        font-size: 12px;
+        width: 100%;
+    }
+
+    /* Prevenir rotação horizontal - forçar orientação portrait */
+    body, html {
+        width: 100vw;
+        height: 100vh;
+        overflow-x: hidden;
+        max-width: 100%;
+    }
+
+    /* Desabilitar scroll horizontal */
+    .container, main {
+        overflow-x: hidden !important;
+        width: 100% !important;
+        max-width: 100% !important;
+    }
+
+    .toast .toast-item {
+        padding: 10px 12px;
+        font-size: 13px;
+        border-radius: 8px;
+    }
 }
 
 /* Extra Small Devices */

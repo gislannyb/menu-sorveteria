@@ -1,253 +1,422 @@
+<!-- Define que este é um documento HTML5 -->
 <!DOCTYPE html>
+<!-- Marca a linguagem como português brasileiro -->
 <html lang="pt-br">
+<!-- Seção de cabeçalho (metadados, estilos, scripts) -->
 <head>
+    <!-- Define a codificação de caracteres como UTF-8 (suporta acentos e caracteres especiais) -->
     <meta charset="UTF-8">
+    <!-- Configuração de viewport para responsividade em mobile (escala inicial, zoom máximo) -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes, viewport-fit=cover">
+    <!-- Permite que o site funcione como app web no iOS -->
     <meta name="apple-mobile-web-app-capable" content="yes">
+    <!-- Define a cor da barra de status no iOS (translúcida/preta) -->
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <!-- Define a cor do tema (usada em abas do navegador e notificações) -->
     <meta name="theme-color" content="#667eea">
+    <!-- Define o nome do app quando instalado no iOS -->
     <meta name="apple-mobile-web-app-title" content="BomSabor">
+    <!-- Título que aparece na aba do navegador -->
     <title>BomSabor | Cardápio</title>
+    <!-- Referencia o arquivo CSS que contém todos os estilos visuais -->
     <link rel="stylesheet" href="style.css">
 </head>
+<!-- Corpo principal do documento HTML (conteúdo visível) -->
 <body>
 
-    <!-- Tela de Splash Animada -->
+    <!-- TELA DE SPLASH (Carregamento animado) -->
+    <!-- Contêiner principal da tela de splash que aparece ao carregar -->
     <div id="splash-screen" class="splash-screen">
+        <!-- Contêiner interno que agrupa todos os elementos da splash -->
         <div class="splash-container">
+            <!-- Ícone emoji da sorveteria (🍦) -->
             <div class="splash-icon">🍦</div>
+            <!-- Título principal da sorveteria -->
             <h1 class="splash-title">BomSabor</h1>
+            <!-- Subtítulo descritivo -->
             <p class="splash-subtitle">Sorveteria Artesanal</p>
+            <!-- Contêiner da barra de carregamento -->
             <div class="splash-loader">
+                <!-- Círculo animado que simula carregamento -->
                 <div class="loader-circle"></div>
             </div>
+            <!-- Texto de carregamento -->
             <p class="splash-text">Carregando seus sabores favoritos...</p>
         </div>
     </div>
 
+    <!-- CABEÇALHO PRINCIPAL (Header com logo e botões) -->
     <header class="top-header">
+        <!-- Contêiner com o conteúdo principal do header -->
         <div class="header-content">
+            <!-- Seção principal do header (logo + texto) -->
             <div class="header-main">
+                <!-- Agrupa o ícone e o texto da marca -->
                 <div class="logo-section">
+                    <!-- Ícone emoji da sorveteria (🍦) -->
                     <div class="ice-cream-icon">🍦</div>
+                    <!-- Textos da marca (nome + tagline) -->
                     <div class="header-text">
+                        <!-- Nome da sorveteria -->
                         <h1>BomSabor</h1>
+                        <!-- Descrição curta da sorveteria -->
                         <p class="tagline">Sorveteria Premium</p>
                     </div>
                 </div>
             </div>
+            <!-- Descrição geral da sorveteria com destaques -->
             <p class="header-description">Descubra nossos sabores deliciosos • Qualidade Premium • Feito com Amor</p>
+            <!-- Contêiner dos badges (distintivos com características) -->
             <div class="header-features">
+                <!-- Badge indicando qualidade premium -->
                 <span class="feature-badge">🌟 Premium</span>
+                <!-- Badge indicando entrega rápida -->
                 <span class="feature-badge">🚚 Entrega Rápida</span>
+                <!-- Badge indicando que é artesanal -->
                 <span class="feature-badge">👨‍🍳 Artesanal</span>
             </div>
         </div>
+        <!-- Botão do carrinho (flutuante no topo) - clica para ir ao carrinho -->
         <button id="cart-button" onclick="scrollToCart()" aria-label="Ver carrinho" class="cart-btn-header">
-            🛒 <span id="cart-count">0</span>
+            <!-- Ícone do carrinho -->
+            🛒 
+            <!-- Contador de itens no carrinho -->
+            <span id="cart-count">0</span>
         </button>
+        <!-- Botão de ajuda (flutuante) - clica para abrir instruções -->
         <button id="help-button" onclick="toggleInstrucoes()" aria-expanded="false" aria-controls="instrucoes-panel" class="help-btn-header">?</button>
     </header>
 
+    <!-- PAINEL DE INSTRUÇÕES (Como fazer um pedido) -->
     <div id="instrucoes-panel" class="instrucoes" role="region" aria-label="Instruções para pedido">
+        <!-- Botão para fechar o painel de instruções -->
         <button class="instrucoes-close" aria-label="Fechar instruções" onclick="toggleInstrucoes()">×</button>
+        <!-- Contêiner interno do painel -->
         <div class="instrucoes-inner">
+            <!-- Ícone de lâmpada (💡) indicando dica/instrução -->
             <div class="instrucoes-icon">💡</div>
+            <!-- Conteúdo das instruções -->
             <div class="instrucoes-content">
+                <!-- Título das instruções -->
                 <h3>Como pedir</h3>
+                <!-- Descrição breve do processo -->
                 <p class="breve">Selecione sabores, ajuste quantidades e envie seu pedido pelo WhatsApp.</p>
+                <!-- Lista ordenada dos passos -->
                 <ol>
+                    <!-- Passo 1: Adicionar itens -->
                     <li>Toque em "Adicionar" nos sabores desejados.</li>
+                    <!-- Passo 2: Ajustar quantidades -->
                     <li>Ajuste + / - ou remova itens no carrinho.</li>
+                    <!-- Passo 3: Enviar pedido -->
                     <li>Preencha seu nome e clique em enviar.</li>
                 </ol>
             </div>
         </div>
     </div>
 
+    <!-- CONTEÚDO PRINCIPAL -->
     <main class="container">
+        <!-- SEÇÃO DE CARDÁPIO (Grid de sorvetes) -->
         <section class="cardapio">
 
+            <!-- ITEM 1: Sorvete de Morango -->
             <div class="item">
+                <!-- Imagem do sorvete de morango -->
                 <img src="morangosorvete.jpg" alt="Sorvete de Morango">
+                <!-- Nome do sabor -->
                 <h3>Morango</h3>
+                <!-- Descrição do sabor -->
                 <p class="desc">Sorvete cremoso de morango fresco.</p>
+                <!-- Preço base (250ml) -->
                 <span class="preco">R$ 8,00</span>
+                <!-- Contêiner do seletor de tamanho -->
                 <div class="size-row">
+                    <!-- Dropdown para selecionar tamanho do sorvete -->
                     <select class="size-select" aria-label="Tamanho Morango">
+                        <!-- Opção 250ml (base) -->
                         <option value="1" data-label="250ml">250ml — R$ 8,00</option>
+                        <!-- Opção 500ml (1.5x o preço) -->
                         <option value="1.5" data-label="500ml">500ml — R$ 12,00</option>
+                        <!-- Opção 700ml (2x o preço) -->
                         <option value="2" data-label="700ml">700ml — R$ 16,00</option>
                     </select>
+                    <!-- Botão para adicionar o item ao carrinho -->
                     <button onclick="adicionarAoCarrinhoFrom(this, 'Morango', 8)">Adicionar</button>
                 </div>
             </div>
 
+            <!-- ITEM 2: Sorvete de Chocolate -->
             <div class="item">
+                <!-- Imagem do sorvete de chocolate -->
                 <img src="sorvetechocolate.jpg" alt="Sorvete de Chocolate">
+                <!-- Nome do sabor -->
                 <h3>Chocolate</h3>
+                <!-- Descrição do sabor -->
                 <p class="desc">Chocolate intenso feito com cacau premium.</p>
+                <!-- Preço base (250ml) -->
                 <span class="preco">R$ 9,00</span>
+                <!-- Contêiner do seletor de tamanho -->
                 <div class="size-row">
+                    <!-- Dropdown para selecionar tamanho do sorvete -->
                     <select class="size-select" aria-label="Tamanho Chocolate">
+                        <!-- Opção 250ml (base) -->
                         <option value="1" data-label="250ml">250ml — R$ 9,00</option>
+                        <!-- Opção 500ml (1.5x o preço) -->
                         <option value="1.5" data-label="500ml">500ml — R$ 13,50</option>
+                        <!-- Opção 700ml (2x o preço) -->
                         <option value="2" data-label="700ml">700ml — R$ 18,00</option>
                     </select>
+                    <!-- Botão para adicionar o item ao carrinho -->
                     <button onclick="adicionarAoCarrinhoFrom(this, 'Chocolate', 9)">Adicionar</button>
                 </div>
             </div>
 
+            <!-- ITEM 3: Sorvete de Baunilha -->
             <div class="item">
+                <!-- Imagem do sorvete de baunilha -->
                 <img src="sorvetecreme.webp" alt="Sorvete de Baunilha">
+                <!-- Nome do sabor -->
                 <h3>Baunilha</h3>
+                <!-- Descrição do sabor -->
                 <p class="desc">Baunilha artesanal com toque de creme.</p>
+                <!-- Preço base (250ml) -->
                 <span class="preco">R$ 7,00</span>
+                <!-- Contêiner do seletor de tamanho -->
                 <div class="size-row">
+                    <!-- Dropdown para selecionar tamanho do sorvete -->
                     <select class="size-select" aria-label="Tamanho Baunilha">
+                        <!-- Opção 250ml (base) -->
                         <option value="1" data-label="250ml">250ml — R$ 7,00</option>
+                        <!-- Opção 500ml (1.5x o preço) -->
                         <option value="1.5" data-label="500ml">500ml — R$ 10,50</option>
+                        <!-- Opção 700ml (2x o preço) -->
                         <option value="2" data-label="700ml">700ml — R$ 14,00</option>
                     </select>
+                    <!-- Botão para adicionar o item ao carrinho -->
                     <button onclick="adicionarAoCarrinhoFrom(this, 'Baunilha', 7)">Adicionar</button>
                 </div>
             </div>
 
+            <!-- ITEM 4: Sorvete de Pistache -->
             <div class="item">
+                <!-- Imagem do sorvete de pistache -->
                 <img src="sorvetepistacha.jpg" alt="Sorvete de Pistache">
+                <!-- Nome do sabor -->
                 <h3>PISTACHE</h3>
+                <!-- Descrição do sabor -->
                 <p class="desc">Sorvete de pistache com raspas de chocolate branco.</p>
+                <!-- Preço base (250ml) -->
                 <span class="preco">R$ 9,00</span>
+                <!-- Contêiner do seletor de tamanho -->
                 <div class="size-row">
+                    <!-- Dropdown para selecionar tamanho do sorvete -->
                     <select class="size-select" aria-label="Tamanho Pistache">
+                        <!-- Opção 250ml (base) -->
                         <option value="1" data-label="250ml">250ml — R$ 9,00</option>
+                        <!-- Opção 500ml (1.5x o preço) -->
                         <option value="1.5" data-label="500ml">500ml — R$ 13,50</option>
+                        <!-- Opção 700ml (2x o preço) -->
                         <option value="2" data-label="700ml">700ml — R$ 18,00</option>
                     </select>
+                    <!-- Botão para adicionar o item ao carrinho -->
                     <button onclick="adicionarAoCarrinhoFrom(this, 'Pistache', 9)">Adicionar</button>
                 </div>
             </div>
 
+            <!-- ITEM 5: Açaí na Tigela -->
             <div class="item">
+                <!-- Imagem do açaí na tigela -->
                 <img src="acaitigela.jpeg" alt="Açaí na Tigela">
+                <!-- Nome do sabor -->
                 <h3>Açaí</h3>
+                <!-- Descrição do sabor -->
                 <p class="desc">Baunilha artesanal com toque de creme.</p>
+                <!-- Preço base (250ml) -->
                 <span class="preco">R$ 7,00</span>
+                <!-- Contêiner do seletor de tamanho -->
                 <div class="size-row">
+                    <!-- Dropdown para selecionar tamanho -->
                     <select class="size-select" aria-label="Tamanho Açaí Tigela">
+                        <!-- Opção 250ml (base) -->
                         <option value="1" data-label="250ml">250ml — R$ 7,00</option>
+                        <!-- Opção 500ml (1.5x o preço) -->
                         <option value="1.5" data-label="500ml">500ml — R$ 10,50</option>
+                        <!-- Opção 700ml (2x o preço) -->
                         <option value="2" data-label="700ml">700ml — R$ 14,00</option>
                     </select>
+                    <!-- Botão para adicionar o item ao carrinho -->
                     <button onclick="adicionarAoCarrinhoFrom(this, 'Açaí Tigela', 7)">Adicionar</button>
                 </div>
             </div>
 
+            <!-- ITEM 6: Açaí na Barca -->
             <div class="item">
+                <!-- Imagem do açaí na barca -->
                 <img src="acaibarca.avif" alt="açai na barca">
+                <!-- Nome do sabor -->
                 <h3>Açaí </h3>
+                <!-- Descrição do sabor -->
                 <p class="desc">Baunilha artesanal com toque de creme.</p>
+                <!-- Preço base (250ml) -->
                 <span class="preco">R$ 7,00</span>
+                <!-- Contêiner do seletor de tamanho -->
                 <div class="size-row">
+                    <!-- Dropdown para selecionar tamanho -->
                     <select class="size-select" aria-label="Tamanho Açaí Barca">
+                        <!-- Opção 250ml (base) -->
                         <option value="1" data-label="250ml">250ml — R$ 7,00</option>
+                        <!-- Opção 500ml (1.5x o preço) -->
                         <option value="1.5" data-label="500ml">500ml — R$ 10,50</option>
+                        <!-- Opção 700ml (2x o preço) -->
                         <option value="2" data-label="700ml">700ml — R$ 14,00</option>
                     </select>
+                    <!-- Botão para adicionar o item ao carrinho -->
                     <button onclick="adicionarAoCarrinhoFrom(this, 'Açaí Barca', 7)">Adicionar</button>
                 </div>
             </div>
 
+            <!-- ITEM 7: Sorvete de Caramelo -->
             <div class="item">
+                <!-- Imagem do sorvete de caramelo -->
                 <img src="caramelosorvete.webp" alt="Sorvete de Caramelo">
+                <!-- Nome do sabor -->
                 <h3>Caramelo</h3>
+                <!-- Descrição do sabor -->
                 <p class="desc">Sinta o sabor do verdadeiro Sorvete de Caramelo.</p>
+                <!-- Preço base (250ml) -->
                 <span class="preco">R$ 7,00</span>
+                <!-- Contêiner do seletor de tamanho -->
                 <div class="size-row">
+                    <!-- Dropdown para selecionar tamanho -->
                     <select class="size-select" aria-label="Tamanho Caramelo">
+                        <!-- Opção 250ml (base) -->
                         <option value="1" data-label="250ml">250ml — R$ 7,00</option>
+                        <!-- Opção 500ml (1.5x o preço) -->
                         <option value="1.5" data-label="500ml">500ml — R$ 10,50</option>
+                        <!-- Opção 700ml (2x o preço) -->
                         <option value="2" data-label="700ml">700ml — R$ 14,00</option>
                     </select>
+                    <!-- Botão para adicionar o item ao carrinho -->
                     <button onclick="adicionarAoCarrinhoFrom(this, 'Caramelo', 7)">Adicionar</button>
                 </div>
             </div>
 
+            <!-- ITEM 8: Sorvete de Café -->
             <div class="item">
+                <!-- Imagem do sorvete de café -->
                 <img src="Sorvete de café.jpg" alt="Sorvete de café">
+                <!-- Nome do sabor -->
                 <h3>café</h3>
+                <!-- Descrição do sabor -->
                 <p class="desc">Para os amantes de café, o melhor sorvete é aqui</p>
+                <!-- Preço base (250ml) -->
                 <span class="preco">R$ 8,00</span>
+                <!-- Contêiner do seletor de tamanho -->
                 <div class="size-row">
+                    <!-- Dropdown para selecionar tamanho -->
                     <select class="size-select" aria-label="Tamanho Café">
+                        <!-- Opção 250ml (base) -->
                         <option value="1" data-label="250ml">250ml — R$ 8,00</option>
+                        <!-- Opção 500ml (1.5x o preço) -->
                         <option value="1.5" data-label="500ml">500ml — R$ 12,00</option>
+                        <!-- Opção 700ml (2x o preço) -->
                         <option value="2" data-label="700ml">700ml — R$ 16,00</option>
                     </select>
+                    <!-- Botão para adicionar o item ao carrinho -->
                     <button onclick="adicionarAoCarrinhoFrom(this, 'Café', 8)">Adicionar</button>
                 </div>
             </div>
 
-        
         </section>
 
-        <!-- instruções movidas para o topo -->
-
-        <!-- Barra lateral informativa (maior visibilidade em telas largas) -->
+        <!-- BARRA LATERAL INFORMATIVA (Informações rápidas sobre a sorveteria) -->
         <aside class="sidebar">
+            <!-- Título da seção de informações -->
             <h3>Informações Rápidas</h3>
+            <!-- Bloco 1: Como fazer um pedido -->
             <div class="side-block">
+                <!-- Título do bloco -->
                 <strong>Como pedir</strong>
+                <!-- Descrição do processo de pedido -->
                 <p>Toque em "Adicionar", ajuste quantidades no carrinho e envie pelo WhatsApp.</p>
             </div>
+            <!-- Bloco 2: Contato via WhatsApp -->
             <div class="side-block">
+                <!-- Título do bloco -->
                 <strong>Contato</strong>
+                <!-- Link para conversar no WhatsApp -->
                 <p>WhatsApp: <a href="https://wa.me/5511999999999" target="_blank">(11) 99999-9999</a></p>
             </div>
+            <!-- Bloco 3: Horário de funcionamento -->
             <div class="side-block">
+                <!-- Título do bloco -->
                 <strong>Horário</strong>
+                <!-- Horário de abertura e fechamento -->
                 <p>Seg–Dom: 10:00 — 22:00</p>
             </div>
+            <!-- Bloco 4: Promoção especial -->
             <div class="side-block promo">
+                <!-- Título do bloco -->
                 <strong>Promoção</strong>
+                <!-- Descrição da promoção -->
                 <p>Peça 2 sabores e ganhe desconto especial no segundo.</p>
             </div>
         </aside>
 
+        <!-- SEÇÃO DE CARRINHO (Resumo do pedido e formulário) -->
         <section class="carrinho">
+            <!-- Título da seção -->
             <h2>🛒 Seu Pedido</h2>
+            <!-- Contêiner principal do pedido -->
             <div id="pedido">
+                <!-- Lista de itens no carrinho (preenchida por JavaScript) -->
                 <div id="cart-items">
-                    <!-- Itens do carrinho serão renderizados aqui -->
+                    <!-- Itens do carrinho serão renderizados aqui dinamicamente -->
                 </div>
+                <!-- Exibe o total do pedido -->
                 <p id="total">Total: R$ 0,00</p>
                 
+                <!-- SEÇÃO DE FORMULÁRIO (Dados do cliente) -->
                 <div class="form-section">
+                    <!-- Título da seção -->
                     <h4>Seus Dados</h4>
+                    <!-- Campo 1: Nome do cliente (obrigatório) -->
                     <div class="form-group">
+                        <!-- Label descritivo -->
                         <label for="nomeCliente">👤 Nome *</label>
+                        <!-- Input de texto para o nome -->
                         <input type="text" id="nomeCliente" placeholder="Digite seu nome completo" />
                     </div>
+                    <!-- Campo 2: Telefone do cliente (opcional) -->
                     <div class="form-group">
+                        <!-- Label descritivo -->
                         <label for="telefoneCliente">📱 Telefone</label>
+                        <!-- Input de texto para o telefone -->
                         <input type="text" id="telefoneCliente" placeholder="(11) 99999-9999" />
                     </div>
+                    <!-- Campo 3: Endereço do cliente (obrigatório) -->
                     <div class="form-group">
+                        <!-- Label descritivo -->
                         <label for="enderecoCliente">📍 Endereço *</label>
+                        <!-- Input de texto para o endereço -->
                         <input type="text" id="enderecoCliente" placeholder="Rua, número, complemento" />
                     </div>
                 </div>
                 
+                <!-- Botão para enviar o pedido pelo WhatsApp -->
                 <button id="btn-whatsapp" onclick="enviarParaWhatsApp()">✅ Enviar pedido pelo WhatsApp</button>
+                <!-- Botão para limpar o carrinho e começar novamente -->
                 <button id="btn-limpar" onclick="limparCarrinho()">🗑️ Limpar carrinho</button>
             </div>
         </section>
 
     </main>
 
+    <!-- Importa o arquivo JavaScript que contém toda a lógica interativa -->
     <script src="script.js"></script>
 
-    <!-- Toast notification -->
+    <!-- CONTAINER DE NOTIFICAÇÕES (Toast notifications) -->
+    <!-- Exibe mensagens temporárias quando itens são adicionados ao carrinho -->
     <div id="toast" class="toast" aria-live="polite" aria-atomic="true"></div>
 
 </body>
