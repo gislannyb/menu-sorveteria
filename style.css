@@ -1102,6 +1102,43 @@ body {
     }
 }
 
+/* Preservar aparência Desktop em Mobile via scroll horizontal compacto */
+@media (max-width: 480px) {
+    /* container deixa de empilhar e passa a rolar horizontalmente mantendo colunas */
+    .container {
+        flex-direction: row;
+        flex-wrap: nowrap;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        gap: 12px;
+        padding: 12px;
+        scroll-snap-type: x mandatory;
+    }
+
+    /* Cada bloco se mantém com largura mínima aproximando o desktop */
+    .cardapio, .sidebar, .carrinho {
+        flex: 0 0 auto;
+        scroll-snap-align: start;
+        background-clip: padding-box;
+    }
+
+    /* Larguras pensadas para manter similaridade com desktop (ajuste conforme necessário) */
+    .cardapio { min-width: 520px; max-width: 520px; }
+    .sidebar { min-width: 280px; max-width: 280px; }
+    .carrinho { min-width: 340px; max-width: 340px; }
+
+    /* Header sticky para permanecer visível enquanto rola horizontalmente */
+    .top-header { position: sticky; top: 0; z-index: 1100; }
+
+    /* Tornar imagens e cards mais compactos para caber melhor */
+    .item img { height: 120px; }
+    .item { padding: 10px; border-radius: 10px; }
+
+    /* Forçar botões flutuantes a não aparecerem sobre o conteúdo durante o scroll horizontal
+       (apenas segurança; já há a classe floating-hidden que chamamos ao rolar) */
+    .cart-btn-header, .help-btn-header { z-index: 1200; }
+}
+
 /* Extra Small Devices */
 @media (max-width: 480px) {
     .header-content {
