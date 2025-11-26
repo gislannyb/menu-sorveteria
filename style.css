@@ -5,18 +5,24 @@
 
 html {
     scroll-behavior: smooth;
+    width: 100%;
+    overflow-x: hidden;
 }
 
 body {
     margin: 0;
+    padding: 0;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
     min-height: 100vh;
+    width: 100%;
+    max-width: 100%;
     color: #2c3e50;
     -webkit-user-select: none;
     user-select: none;
     -webkit-text-size-adjust: 100%;
     text-size-adjust: 100%;
+    overflow-x: hidden;
 }
 
 /* Animações */
@@ -318,6 +324,8 @@ body {
     flex-wrap: wrap;
     max-width: 1400px;
     margin: 0 auto;
+    width: 100%;
+    overflow-x: hidden;
 }
 
 /* Painel de Instruções */
@@ -1106,10 +1114,13 @@ body {
 @media (max-width: 768px) {
     .container {
         flex-direction: column;
-        align-items: stretch;
+        align-items: center;
         gap: 20px;
-        padding: 20px 16px;
+        padding: 20px 12px;
         overflow-x: hidden;
+        width: 100%;
+        max-width: 100%;
+        margin: 0 auto;
     }
 
     /* Cardápio com carrossel horizontal interno */
@@ -1120,6 +1131,7 @@ body {
         width: 100%;
         max-width: 100%;
         justify-content: center;
+        overflow-x: hidden;
     }
 
     /* Cada card de sorvete com tamanho responsivo */
@@ -1309,10 +1321,10 @@ body {
 
     /* Prevenir rotação horizontal - forçar orientação portrait */
     body, html {
-        width: 100vw;
+        width: 100%;
+        max-width: 100%;
         height: 100vh;
         overflow-x: hidden;
-        max-width: 100%;
     }
 
     /* Desabilitar scroll horizontal */
@@ -1372,6 +1384,10 @@ body {
     .container {
         padding: 12px 8px;
         gap: 12px;
+        width: 100%;
+        max-width: 100%;
+        margin: 0 auto;
+        overflow-x: hidden;
     }
 
     .top-header h1 {

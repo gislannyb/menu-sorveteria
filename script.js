@@ -267,8 +267,7 @@ function enviarParaWhatsApp() {
         const subtotal = item.qtd * item.preco;
         total += subtotal;
         mensagem += `${index + 1}. ${item.sabor} (${item.tamanho})\n`;
-        mensagem += `   Quantidade: ${item.qtd}x\n`;
-        mensagem += `   Subtotal: R$ ${subtotal.toFixed(2).replace('.', ',')}\n\n`;
+        mensagem += `   Qtd: ${item.qtd}x | R$ ${item.preco.toFixed(2).replace('.', ',')} = R$ ${subtotal.toFixed(2).replace('.', ',')}\n\n`;
     });
     
     // Separador e total
@@ -279,21 +278,17 @@ function enviarParaWhatsApp() {
     // Rodapé com data/hora
     const agora = new Date();
     const dataHora = agora.toLocaleString('pt-BR');
-    mensagem += `📅 Pedido enviado em: ${dataHora}\n`;
+    mensagem += `📅 Data/Hora: ${dataHora}\n`;
     mensagem += '\n✅ Obrigado por escolher BomSabor!';
 
     // Copia mensagem para área de transferência
     navigator.clipboard.writeText(mensagem).then(() => {
-        showToast('✅ Mensagem copiada! Abrindo WhatsApp Web...', 2000);
-        
-        // Abre WhatsApp Web em nova aba
-        setTimeout(() => {
-            window.open('https://web.whatsapp.com', '_blank');
-        }, 500);
+        showToast('✅ Mensagem copiada com sucesso!', 3000);
+        alert('✅ Mensagem pronta!\n\n📋 A mensagem foi copiada para sua área de transferência.\n\n📱 Abra o WhatsApp, escolha um contato e COLE a mensagem (Ctrl+V).\n\nSeu pedido:\n' + mensagem);
         
     }).catch(() => {
-        // Se falhar a cópia, mostra alternativa
-        alert('Erro ao copiar mensagem.\n\nAbra https://web.whatsapp.com e copie manualmente a mensagem abaixo:\n\n' + mensagem);
+        // Se falhar a cópia, mostra a mensagem em um alert
+        alert('Mensagem do seu pedido:\n\n' + mensagem + '\n\n📋 Copie a mensagem acima e envie pelo WhatsApp!');
     });
 }
 
