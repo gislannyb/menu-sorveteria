@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes, viewport-fit=cover">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="theme-color" content="#667eea">
+    <meta name="apple-mobile-web-app-title" content="BomSabor">
+    <title>BomSabor | Cardápio</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- Tela de Splash Animada -->
+    <div id="splash-screen" class="splash-screen">
+        <div class="splash-container">
+            <div class="splash-icon">🍦</div>
+            <h1 class="splash-title">BomSabor</h1>
+            <p class="splash-subtitle">Sorveteria Artesanal</p>
+            <div class="splash-loader">
+                <div class="loader-circle"></div>
+            </div>
+            <p class="splash-text">Carregando seus sabores favoritos...</p>
+        </div>
+    </div>
+
+    <header class="top-header">
+        <div class="header-content">
+            <div class="header-main">
+                <div class="logo-section">
+                    <div class="ice-cream-icon">🍦</div>
+                    <div class="header-text">
+                        <h1>BomSabor</h1>
+                        <p class="tagline">Sorveteria Premium</p>
+                    </div>
+                </div>
+            </div>
+            <p class="header-description">Descubra nossos sabores deliciosos • Qualidade Premium • Feito com Amor</p>
+            <div class="header-features">
+                <span class="feature-badge">🌟 Premium</span>
+                <span class="feature-badge">🚚 Entrega Rápida</span>
+                <span class="feature-badge">👨‍🍳 Artesanal</span>
+            </div>
+        </div>
+        <button id="cart-button" onclick="scrollToCart()" aria-label="Ver carrinho" class="cart-btn-header">
+            🛒 <span id="cart-count">0</span>
+        </button>
+        <button id="help-button" onclick="toggleInstrucoes()" aria-expanded="false" aria-controls="instrucoes-panel" class="help-btn-header">?</button>
+    </header>
+
+    <div id="instrucoes-panel" class="instrucoes" role="region" aria-label="Instruções para pedido">
+        <button class="instrucoes-close" aria-label="Fechar instruções" onclick="toggleInstrucoes()">×</button>
+        <div class="instrucoes-inner">
+            <div class="instrucoes-icon">💡</div>
+            <div class="instrucoes-content">
+                <h3>Como pedir</h3>
+                <p class="breve">Selecione sabores, ajuste quantidades e envie seu pedido pelo WhatsApp.</p>
+                <ol>
+                    <li>Toque em "Adicionar" nos sabores desejados.</li>
+                    <li>Ajuste + / - ou remova itens no carrinho.</li>
+                    <li>Preencha seu nome e clique em enviar.</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+
+    <main class="container">
+        <section class="cardapio">
+
+            <div class="item">
+                <img src="morangosorvete.jpg" alt="Sorvete de Morango">
+                <h3>Morango</h3>
+                <p class="desc">Sorvete cremoso de morango fresco.</p>
+                <span class="preco">R$ 8,00</span>
+                <div class="size-row">
+                    <select class="size-select" aria-label="Tamanho Morango">
+                        <option value="1" data-label="250ml">250ml — R$ 8,00</option>
+                        <option value="1.5" data-label="500ml">500ml — R$ 12,00</option>
+                        <option value="2" data-label="700ml">700ml — R$ 16,00</option>
+                    </select>
+                    <button onclick="adicionarAoCarrinhoFrom(this, 'Morango', 8)">Adicionar</button>
+                </div>
+            </div>
+
+            <div class="item">
+                <img src="sorvetechocolate.jpg" alt="Sorvete de Chocolate">
+                <h3>Chocolate</h3>
+                <p class="desc">Chocolate intenso feito com cacau premium.</p>
+                <span class="preco">R$ 9,00</span>
+                <div class="size-row">
+                    <select class="size-select" aria-label="Tamanho Chocolate">
+                        <option value="1" data-label="250ml">250ml — R$ 9,00</option>
+                        <option value="1.5" data-label="500ml">500ml — R$ 13,50</option>
+                        <option value="2" data-label="700ml">700ml — R$ 18,00</option>
+                    </select>
+                    <button onclick="adicionarAoCarrinhoFrom(this, 'Chocolate', 9)">Adicionar</button>
+                </div>
+            </div>
+
+            <div class="item">
+                <img src="sorvetecreme.webp" alt="Sorvete de Baunilha">
+                <h3>Baunilha</h3>
+                <p class="desc">Baunilha artesanal com toque de creme.</p>
+                <span class="preco">R$ 7,00</span>
+                <div class="size-row">
+                    <select class="size-select" aria-label="Tamanho Baunilha">
+                        <option value="1" data-label="250ml">250ml — R$ 7,00</option>
+                        <option value="1.5" data-label="500ml">500ml — R$ 10,50</option>
+                        <option value="2" data-label="700ml">700ml — R$ 14,00</option>
+                    </select>
+                    <button onclick="adicionarAoCarrinhoFrom(this, 'Baunilha', 7)">Adicionar</button>
+                </div>
+            </div>
+
+            <div class="item">
+                <img src="sorvetepistacha.jpg" alt="Sorvete de Pistache">
+                <h3>PISTACHE</h3>
+                <p class="desc">Sorvete de pistache com raspas de chocolate branco.</p>
+                <span class="preco">R$ 9,00</span>
+                <div class="size-row">
+                    <select class="size-select" aria-label="Tamanho Pistache">
+                        <option value="1" data-label="250ml">250ml — R$ 9,00</option>
+                        <option value="1.5" data-label="500ml">500ml — R$ 13,50</option>
+                        <option value="2" data-label="700ml">700ml — R$ 18,00</option>
+                    </select>
+                    <button onclick="adicionarAoCarrinhoFrom(this, 'Pistache', 9)">Adicionar</button>
+                </div>
+            </div>
+
+            <div class="item">
+                <img src="acaitigela.jpeg" alt="Açaí na Tigela">
+                <h3>Açaí</h3>
+                <p class="desc">Baunilha artesanal com toque de creme.</p>
+                <span class="preco">R$ 7,00</span>
+                <div class="size-row">
+                    <select class="size-select" aria-label="Tamanho Açaí Tigela">
+                        <option value="1" data-label="250ml">250ml — R$ 7,00</option>
+                        <option value="1.5" data-label="500ml">500ml — R$ 10,50</option>
+                        <option value="2" data-label="700ml">700ml — R$ 14,00</option>
+                    </select>
+                    <button onclick="adicionarAoCarrinhoFrom(this, 'Açaí Tigela', 7)">Adicionar</button>
+                </div>
+            </div>
+
+            <div class="item">
+                <img src="acaibarca.avif" alt="açai na barca">
+                <h3>Açaí </h3>
+                <p class="desc">Baunilha artesanal com toque de creme.</p>
+                <span class="preco">R$ 7,00</span>
+                <div class="size-row">
+                    <select class="size-select" aria-label="Tamanho Açaí Barca">
+                        <option value="1" data-label="250ml">250ml — R$ 7,00</option>
+                        <option value="1.5" data-label="500ml">500ml — R$ 10,50</option>
+                        <option value="2" data-label="700ml">700ml — R$ 14,00</option>
+                    </select>
+                    <button onclick="adicionarAoCarrinhoFrom(this, 'Açaí Barca', 7)">Adicionar</button>
+                </div>
+            </div>
+
+            <div class="item">
+                <img src="caramelosorvete.webp" alt="Sorvete de Caramelo">
+                <h3>Caramelo</h3>
+                <p class="desc">Sinta o sabor do verdadeiro Sorvete de Caramelo.</p>
+                <span class="preco">R$ 7,00</span>
+                <div class="size-row">
+                    <select class="size-select" aria-label="Tamanho Caramelo">
+                        <option value="1" data-label="250ml">250ml — R$ 7,00</option>
+                        <option value="1.5" data-label="500ml">500ml — R$ 10,50</option>
+                        <option value="2" data-label="700ml">700ml — R$ 14,00</option>
+                    </select>
+                    <button onclick="adicionarAoCarrinhoFrom(this, 'Caramelo', 7)">Adicionar</button>
+                </div>
+            </div>
+
+            <div class="item">
+                <img src="Sorvete de café.jpg" alt="Sorvete de café">
+                <h3>café</h3>
+                <p class="desc">Para os amantes de café, o melhor sorvete é aqui</p>
+                <span class="preco">R$ 8,00</span>
+                <div class="size-row">
+                    <select class="size-select" aria-label="Tamanho Café">
+                        <option value="1" data-label="250ml">250ml — R$ 8,00</option>
+                        <option value="1.5" data-label="500ml">500ml — R$ 12,00</option>
+                        <option value="2" data-label="700ml">700ml — R$ 16,00</option>
+                    </select>
+                    <button onclick="adicionarAoCarrinhoFrom(this, 'Café', 8)">Adicionar</button>
+                </div>
+            </div>
+
+        
+        </section>
+
+        <!-- instruções movidas para o topo -->
+
+        <!-- Barra lateral informativa (maior visibilidade em telas largas) -->
+        <aside class="sidebar">
+            <h3>Informações Rápidas</h3>
+            <div class="side-block">
+                <strong>Como pedir</strong>
+                <p>Toque em "Adicionar", ajuste quantidades no carrinho e envie pelo WhatsApp.</p>
+            </div>
+            <div class="side-block">
+                <strong>Contato</strong>
+                <p>WhatsApp: <a href="https://wa.me/5511999999999" target="_blank">(11) 99999-9999</a></p>
+            </div>
+            <div class="side-block">
+                <strong>Horário</strong>
+                <p>Seg–Dom: 10:00 — 22:00</p>
+            </div>
+            <div class="side-block promo">
+                <strong>Promoção</strong>
+                <p>Peça 2 sabores e ganhe desconto especial no segundo.</p>
+            </div>
+        </aside>
+
+        <section class="carrinho">
+            <h2>🛒 Seu Pedido</h2>
+            <div id="pedido">
+                <div id="cart-items">
+                    <!-- Itens do carrinho serão renderizados aqui -->
+                </div>
+                <p id="total">Total: R$ 0,00</p>
+                
+                <div class="form-section">
+                    <h4>Seus Dados</h4>
+                    <div class="form-group">
+                        <label for="nomeCliente">👤 Nome *</label>
+                        <input type="text" id="nomeCliente" placeholder="Digite seu nome completo" />
+                    </div>
+                    <div class="form-group">
+                        <label for="telefoneCliente">📱 Telefone</label>
+                        <input type="text" id="telefoneCliente" placeholder="(11) 99999-9999" />
+                    </div>
+                    <div class="form-group">
+                        <label for="enderecoCliente">📍 Endereço *</label>
+                        <input type="text" id="enderecoCliente" placeholder="Rua, número, complemento" />
+                    </div>
+                </div>
+                
+                <button id="btn-whatsapp" onclick="enviarParaWhatsApp()">✅ Enviar pedido pelo WhatsApp</button>
+                <button id="btn-limpar" onclick="limparCarrinho()">🗑️ Limpar carrinho</button>
+            </div>
+        </section>
+
+    </main>
+
+    <script src="script.js"></script>
+
+    <!-- Toast notification -->
+    <div id="toast" class="toast" aria-live="polite" aria-atomic="true"></div>
+
+</body>
+</html>
