@@ -3,6 +3,9 @@ let carrinho = [];
 // Se quiser enviar direto para um número específico, coloque o número aqui no formato
 // '55<ddd><numero>' (ex: '5511999999999' para um número de SP). Deixe vazio para usar o QR.
 const WHATSAPP_PHONE = ''; // <--- coloque o número aqui se desejar envio direto
+// Se você prefere direcionar para um link QR específico (wa.me/qr/...), coloque-o aqui.
+// Exemplo: 'https://wa.me/qr/2F2ORF5CAI3SB1'
+const WHATSAPP_QR = 'https://wa.me/qr/2F2ORF5CAI3SB1'; // <--- coloque seu link QR aqui
 
 // Função para ocultar splash screen
 function hideSplashScreen() {
@@ -285,8 +288,12 @@ function enviarParaWhatsApp() {
     const encoded = encodeURIComponent(mensagem);
 
     let url = '';
-    // Se houver número configurado, direciona para conversa específica
-    if (WHATSAPP_PHONE && WHATSAPP_PHONE.trim() !== '') {
+    // Prioridade: WHATSAPP_QR (link QR), depois número direto, depois heurística por dispositivo
+    if (typeof WHATSAPP_QR === 'string' && WHATSAPP_QR.trim() !== '') {
+        // Tenta anexar o texto à URL do QR (alguns provedores podem ignorar o param)
+        url = WHATSAPP_QR + (WHATSAPP_QR.indexOf('?') === -1 ? `?text=${encoded}` : `&text=${encoded}`);
+    } else if (WHATSAPP_PHONE && WHATSAPP_PHONE.trim() !== '') {
+        // Envia diretamente para o número (desktop/web)
         url = `https://web.whatsapp.com/send?phone=${WHATSAPP_PHONE}&text=${encoded}`;
     } else {
         // Detecta mobile simples pelo userAgent

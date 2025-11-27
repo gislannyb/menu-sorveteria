@@ -443,6 +443,13 @@ body {
     color: #2c3e50;
 }
 
+/* Garante que nomes longos quebrem linhas em vez de cortar */
+.item h3 {
+    white-space: normal;
+    overflow-wrap: break-word;
+    word-break: break-word;
+}
+
 .item .desc {
     color: #7f8c8d;
     font-size: 13px;
@@ -623,6 +630,16 @@ body {
 .cart-line .info .name {
     font-weight: 600;
     color: #2c3e50;
+}
+
+/* Permite que o nome do item no carrinho quebre linhas quando necessário */
+.cart-line .info {
+    min-width: 0;
+}
+.cart-line .info .name {
+    white-space: normal;
+    overflow-wrap: break-word;
+    word-break: break-word;
 }
 
 .cart-line .info .tamanho {
@@ -958,6 +975,43 @@ body {
     .item h3 {
         font-size: 15px;
         margin: 8px 0 4px 0;
+    }
+
+    /* Força layout consistente do seletor + botão dentro do card
+       Em telas maiores fica em linha; media queries para mobile
+       podem sobrescrever para coluna quando necessário. */
+    .size-row {
+        display: flex;
+        gap: 8px;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .size-row .size-select {
+        flex: 1 1 auto;
+        min-width: 0; /* permite encolher sem quebrar o layout */
+    }
+
+    .size-row button {
+        flex: 0 0 auto;
+        white-space: nowrap;
+        padding: 10px 14px;
+        min-width: 90px;
+        border-radius: 8px;
+        box-sizing: border-box;
+        overflow: visible;
+    }
+
+    /* Garantia extra: para evitar conflitos de regras anteriores, aplicar especificidade
+       maior ao botão dentro do cardapio. Isso mantém o texto "Adicionar" visível. */
+    .cardapio .item .size-row > button,
+    .item .size-row > button {
+        flex: 0 0 auto;
+        white-space: nowrap;
+        min-width: 96px;
+        padding: 10px 14px;
+        overflow: visible;
+        box-sizing: border-box;
     }
 
     .item .desc {
@@ -1658,17 +1712,25 @@ body {
     max-width: 1200px; /* limita a largura para manter o layout agradável */
 }
 
+
 .item {
     background: white;
-    width: 270px;
+    flex: 0 1 270px; /* base flexível, permite encolher/expandir conforme espaço */
+    max-width: 100%;
     border-radius: 10px;
     padding: 15px;
     text-align: center;
     box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    min-width: 0; /* permite quebra dentro de flex items */
 }
 
 .item img {
     width: 100%;
+    height: auto;
+    object-fit: cover;
     border-radius: 10px;
 }
 
@@ -1698,8 +1760,10 @@ body {
 }
 .item .size-select { width: 140px; }
 
+
 .carrinho {
-    width: 360px;
+    width: 100%;
+    max-width: 360px; /* largura máxima, mas permite encolher */
     background: linear-gradient(180deg, #ffffff, #fffaf0);
     padding: 18px;
     border-radius: 12px;
@@ -1711,6 +1775,9 @@ body {
     display: flex;
     flex-direction: column;
     gap: 12px;
+    min-width: 0;
+    box-sizing: border-box;
+    overflow: visible;
 }
 
 .carrinho h2 {
@@ -1938,19 +2005,114 @@ body {
         gap: 20px;
     }
 
+    /* Layout de cards fluido: 3-4 colunas dependendo do espaço disponível */
     .item {
-        flex: 0 1 calc(25% - 18px);
-        min-width: 220px;
-        max-width: 280px;
-        padding: 18px;
+        box-sizing: border-box;
+        flex: 1 1 calc(33.333% - 20px);
+        min-width: 160px;
+        max-width: 340px;
+        padding: 16px;
         border-radius: 14px;
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+        word-wrap: break-word;
     }
 
-    .item img { height: 160px; }
+    .item img { height: 140px; width: 100%; object-fit: cover; }
 
-    /* Aumenta legibilidade do carrinho e botões */
-    .carrinho { width: 360px; }
-    .cart-line .name { font-size: 16px; }
-    .cart-line .price { font-size: 14px; }
+    /* Corrige overflow de texto dentro de flex items */
+    .cardapio, .item, .cart-line, .info {
+        min-width: 0;
+    }
+
+    .item h3, .item .desc { overflow-wrap: break-word; hyphens: auto; }
+
+    /* Aumenta legibilidade do carrinho e botões sem quebrar o layout */
+    .carrinho { width: 320px; max-width: 34%; min-width: 280px; }
+    .cart-line { display: flex; align-items: center; justify-content: space-between; gap: 8px; flex-wrap: wrap; }
+    .cart-line .info { min-width: 0; flex: 1 1 auto; }
+    .cart-line .name { font-size: 15px; white-space: normal; overflow-wrap: break-word; }
+    .cart-line .price { font-size: 13px; }
     .qty-btn { padding: 6px 10px; }
 }
+
+    /* Override final: garante que o botão dentro de .size-row não fique 100% (corrige corte) */
+    .size-row > button {
+        width: auto !important;
+        flex: 0 0 auto !important;
+        min-width: 88px !important;
+        white-space: nowrap !important;
+        box-sizing: border-box !important;
+    }
+
+    /* Se o espaço for muito pequeno, permitir que o botão quebre para a linha abaixo (mobile) */
+    @media (max-width: 520px) {
+        .size-row { flex-direction: column; align-items: stretch; }
+        .size-row > button { width: 100% !important; }
+    }
+
+    /* Mobile improvements: ajusta layout e alvos de toque para celular */
+    @media (max-width: 520px) {
+        html { font-size: 16px; }
+        body { padding: 8px 6px; }
+
+        /* Cardápio: um card por linha para leitura mais fácil */
+        .cardapio {
+            display: block;
+            width: 100%;
+            max-width: 100%;
+        }
+        .cardapio .item {
+            width: 100% !important;
+            max-width: 100% !important;
+            margin: 0 0 18px 0;
+            padding: 14px !important;
+            box-shadow: 0 8px 18px rgba(0,0,0,0.06);
+        }
+
+        /* Imagens menores e com altura fixa para consistência */
+        .item img { height: 160px; object-fit: cover; }
+
+        /* Empilha select + botão e garante full-width */
+        .size-row { flex-direction: column; gap: 8px; align-items: stretch; }
+        .size-row .size-select { width: 100% !important; flex: none !important; }
+        .size-row > button { width: 100% !important; min-width: 0 !important; }
+
+        /* Aumenta áreas de toque */
+        .item button, .size-select, #btn-whatsapp, #btn-limpar, .qty-btn {
+            min-height: 48px !important;
+            padding: 12px 14px !important;
+            font-size: 16px !important;
+        }
+
+        /* Carrinho ocupa toda a largura abaixo do cardápio */
+        .container { flex-direction: column; padding: 12px !important; }
+        .carrinho { position: static !important; top: auto !important; width: 100% !important; max-width: 100% !important; }
+
+        /* Formulário com inputs maiores */
+        .form-group input { padding: 14px !important; font-size: 16px !important; }
+
+        /* Toast e botões flutuantes ajustados para evitar sobreposição */
+        .cart-btn-header, .help-btn-header { right: 12px !important; top: 12px !important; }
+
+        /* Remove sombras muito pesadas para performance em mobile */
+        .item, .carrinho { box-shadow: 0 6px 18px rgba(0,0,0,0.06) !important; }
+    }
+
+    /* Corrige largura fixa do select que estava empurrando o botão para fora
+       e torna o select flexível dentro do card */
+    .cardapio .item .size-select,
+    .item .size-select {
+        width: auto !important;
+        flex: 1 1 auto !important;
+        min-width: 0 !important;
+    }
+
+    /* Reduz um pouco o min-width do botão para garantir que caiba com o select
+       no tamanho padrão do card (270px) */
+    .cardapio .item .size-row > button,
+    .item .size-row > button {
+        min-width: 72px !important;
+        padding: 10px 12px !important;
+    }
