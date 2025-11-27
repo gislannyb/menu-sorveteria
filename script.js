@@ -287,25 +287,24 @@ function enviarParaWhatsApp() {
     // Prepara URL para abrir com a mensagem pré-preenchida
     const encoded = encodeURIComponent(mensagem);
 
+    // Construir URL que pré-preenche a mensagem sempre que possível.
+    // Preferimos abrir a URL que aceita `text=` (web.whatsapp.com/send ou wa.me/?text=)
+    // Isso garante que o nome, pedido e endereço do cliente já apareçam no campo de mensagem.
     let url = '';
-    // Prioridade: WHATSAPP_QR (link QR), depois número direto, depois heurística por dispositivo
-    if (typeof WHATSAPP_QR === 'string' && WHATSAPP_QR.trim() !== '') {
-        // Tenta anexar o texto à URL do QR (alguns provedores podem ignorar o param)
-        url = WHATSAPP_QR + (WHATSAPP_QR.indexOf('?') === -1 ? `?text=${encoded}` : `&text=${encoded}`);
-    } else if (WHATSAPP_PHONE && WHATSAPP_PHONE.trim() !== '') {
-        // Envia diretamente para o número (desktop/web)
+    const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+
+    // Se houver número configurado, envie direto para o número (mais confiável para pré-preenchimento)
+    if (WHATSAPP_PHONE && WHATSAPP_PHONE.trim() !== '') {
+        // Usa web.whatsapp.com por padrão (funciona no desktop e redireciona corretamente em dispositivos móveis)
         url = `https://web.whatsapp.com/send?phone=${WHATSAPP_PHONE}&text=${encoded}`;
     } else {
-        // Detecta mobile simples pelo userAgent
-        const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
-        if (isMobile) {
-            // wa.me funciona bem em dispositivos móveis
-            url = `https://wa.me/?text=${encoded}`;
-        } else {
-            // Desktop: abrir WhatsApp Web com texto pré-preenchido
-            url = `https://web.whatsapp.com/send?text=${encoded}`;
-        }
+        // Sem número: em mobile usamos wa.me (abre app/web com texto), em desktop usamos web.whatsapp.com
+        url = isMobile ? `https://wa.me/?text=${encoded}` : `https://web.whatsapp.com/send?text=${encoded}`;
     }
+
+    // Nota: links do tipo wa.me/qr/... geralmente direcionam para um QR e podem não aceitar `text=`.
+    // Se você precisa forçar o QR, podemos abrir `WHATSAPP_QR` em vez do link com `text=` —
+    // mas isso pode impedir que a mensagem apareça automaticamente. Decida se prefere QR ou mensagem pré-preenchida.
 
     // Tenta abrir o WhatsApp em nova aba/janela
     try {
